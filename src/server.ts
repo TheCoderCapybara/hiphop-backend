@@ -1,6 +1,6 @@
 import fastify from "fastify"
 
-import { env } from "./shared/env/enviroment"
+import { env } from "./shared/env/enviroments"
 import { appRoutes } from "./shared/routes/app.routes"
 
 const app = fastify()

@@ -1,24 +1,15 @@
 import { connection } from "../../../../config/database"
-import type { IUserDTO } from "../../dtos/users.dto"
-import type { IUsersRepository } from "../users-repository.interface"
+import type { UserCreateRequestDto } from "../../dtos/user/user-create-request.dto"
+import type { UserResponseDto } from "../../dtos/user/user-create-response.dto"
+import type { UsersRepositoryInterface } from "../users-repository.interface"
 
-export class UsersRepository implements IUsersRepository {
-  async create(user: IUserDTO): Promise<void> {
-    await connection
-      .insert({
-        name: user.name,
-        email: user.email,
-        password: user.password,
-      })
-      .into("users")
+export class UsersRepository implements UsersRepositoryInterface {
+  async create(data: UserCreateRequestDto): Promise<void> {
+    await connection("users").insert(data)
   }
 
-  async getByEmail(email: string): Promise<IUserDTO | null> {
-    const user = await connection
-      .select("*")
-      .from("users")
-      .where("email", email)
-      .first()
+  async getUserByEmail(email: string): Promise<UserResponseDto | null> {
+    const user = await connection("users").where("email", email).first()
 
     return user
   }
