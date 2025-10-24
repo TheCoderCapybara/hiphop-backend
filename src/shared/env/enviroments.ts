@@ -1,5 +1,6 @@
 import "dotenv/config"
 import { z } from "zod"
+//import { AppError } from "../error/error-handler"
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["local", "test", "production"]),
@@ -10,11 +11,18 @@ const envSchema = z.object({
   DB_USER: z.string(),
   DB_PASSWORD: z.string(),
   DB_DATABASE: z.string(),
-  DB_POOL_MIN: z.coerce.number(),
-  DB_POOL_MAX: z.coerce.number(),
-  SALT_RESULT: z.coerce.number().default(10),
-  JWT_SECRET: z.string().min(1),
-  JWT_EXPIRES_IN: z.string().default("1h"),
+  DB_MIN_POOL: z.coerce.number(),
+  DB_MAX_POOL: z.coerce.number(),
+  SALT_RESULT: z.coerce.number(),
+  JWT_SECRET: z.string(),
+  JWT_EXPIRES_IN: z.string(),
+  MAIL_HOST: z.string(),
+  MAIL_PORT: z.coerce.number(),
+  MAIL_SECURITY: z.coerce.boolean().default(false),
+  MAIL_USER: z.string(),
+  MAIL_PASS: z.string(),
+  MAIL_FROM: z.string(),
+  FRONTEND_URL: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)

@@ -13,4 +13,8 @@ export class UsersRepository implements UsersRepositoryInterface {
 
     return user
   }
+
+  async createToken(userId: string, token: string): Promise<void> {
+    await connection("tokens").insert({ user_id: userId, token })
+  }
 }
